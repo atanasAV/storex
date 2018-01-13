@@ -9,6 +9,7 @@
   "author": "AV",
   "license": "ISC",
   "dependencies": {
+    "jquery": "^3.2.1",
     "node-gyp": "^3.6.2",
     "sqlite3": "^3.1.13"
   },

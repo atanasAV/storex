@@ -1,0 +1,18 @@
+{
+  "name": "storex",
+  "version": "1.0.0",
+  "description": "Storage services",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "AV",
+  "license": "ISC",
+  "dependencies": {
+    "node-gyp": "^3.6.2",
+    "sqlite3": "^3.1.13"
+  },
+  "devDependencies": {
+    "electron-builder": "^19.52.1"
+  }
+}

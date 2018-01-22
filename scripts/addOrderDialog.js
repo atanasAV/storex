@@ -35,10 +35,10 @@ function addProductInput() {
 
 function getFormInput() {
   var order = {};
-
-  order.clientNames = $("#clientNames").val();
-  order.clientNumber = $("#clientNumber").val();
-  order.clientAddress = $("#clientAddress").val();
+  order.client = {};
+  order.client.names = $("#clientNames").val();
+  order.client.phoneNumber = $("#clientNumber").val();
+  order.client.address = $("#clientAddress").val();
 
   order.products = {};
   for(var i = 1; i <= productsNumber; i++) {

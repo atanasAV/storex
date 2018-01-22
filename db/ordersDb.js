@@ -10,15 +10,16 @@ exports.init = function() {
 
     const clientsTableSql = `
     create table if not exists clients(
-        client_number varchar(10), 
-        client_names text)
+        names text,
+        phone_number varchar(10), 
+        address text)
     `
 
     const ordersTableSql = `
     create table if not exists orders(
         client_id int,
-        order_paid int,
-        FOREIGN KEY(client_id) REFERENCES clients(client_id))
+        paid int,
+        FOREIGN KEY(client_id) REFERENCES clients(rowid))
     `
 
 
@@ -30,5 +31,26 @@ exports.init = function() {
 }
 
 exports.addOrder = function(order) {
+    let db = new sqlite3.Database('db/storex.db');
+    console.log('here')
+    db.each('select rowid rowId from clients where phone_number = ?', [order.client.phoneNumber], (err, row) => {
+        console.log("callback")
+        if(err) console.log(err);
 
+        if(row.rowId) {
+            console.log(row.rowId);
+        } else {
+            addClient(db, order.client);
+        }
+    });
+    db.close();
+}
+
+function addClient(db, client) {
+    console.log('adding client');
+    const addClient = `
+    insert into clients(names, phone_number, address) 
+    values(?, ?, ?)
+    `
+    db.run(addClient, client.names, client.phoneNumber, client.address);
 }

@@ -30,27 +30,48 @@ exports.init = function() {
     return this;
 }
 
-exports.addOrder = function(order) {
+exports.submitOrder = function(order) {
     let db = new sqlite3.Database('db/storex.db');
     console.log('here')
-    db.each('select rowid rowId from clients where phone_number = ?', [order.client.phoneNumber], (err, row) => {
-        console.log("callback")
-        if(err) console.log(err);
+    let getClientRowId = 'SELECT rowid AS id FROM clients WHERE phone_number = ?';
+    db.get(getClientRowId, [order.client.phoneNumber], (err, row) => {
+        if(err) throw err;
 
-        if(row.rowId) {
-            console.log(row.rowId);
+        if(row) {
+            console.log("Client found !");
+            addOrderAndProducts(db, order, row.id);
         } else {
-            addClient(db, order.client);
+            addWholeOrder(db, order);
         }
     });
     db.close();
 }
 
-function addClient(db, client) {
-    console.log('adding client');
+function addWholeOrder(db, order) {
+    var client = order.client;
     const addClient = `
     insert into clients(names, phone_number, address) 
     values(?, ?, ?)
     `
-    db.run(addClient, client.names, client.phoneNumber, client.address);
+    db.run(addClient, client.names, client.phoneNumber, client.address, (err) => {
+        if(err)  throw err;
+        console.log("Client added !");
+        addOrderAndProducts(db, order, this.lastID);
+    });
+}
+
+function addOrderAndProducts(db, order, client_id) {
+    const addOrder = `
+    insert into orders(client_id, paid)
+    values(?, ?)
+    `;
+    db.run(addOrder, client_id, order.paid, (err) => {
+        if(err) throw err;
+        console.log("Order added !")
+        addProducts(order.products, this.lastID);
+    });
+}
+
+function addProducts(products, order_id) {
+    console.log("No products yet :)) !")
 }

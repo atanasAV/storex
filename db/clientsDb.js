@@ -5,13 +5,13 @@ exports.getClientRowId = function(db, phone_number, callback) {
     select rowid as client_id 
     from clients 
     where phone_number = ?`;
-    db.get(getClientRowId, phone_number, (err, row) => {
+    db.get(getClientRowIdSql, phone_number, (err, row) => {
         if(err) throw err;
         if(row === undefined) {
             //client not found, add it
-            addClient(db, order, callback);
+            addClient(db, callback.order, callback);
         } else if(callback) {
-            callback(db, order, row.client_id);
+            callback(db, callback.order, row.client_id);
         }
     });
 }

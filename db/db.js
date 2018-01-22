@@ -49,7 +49,8 @@ exports.submitNewOrder = function(order) {
 
     //Get client rowid and add order
     var callback = ordersDb.addOrder;
-    clientsDb.getClientRowId(db, order.client.phoneNumber, callback);
+    var callbackParams = {order: order};
+    clientsDb.getClientRowId(db, order.client.phoneNumber, callback.bind(callbackParams));
 
     db.close();
 }

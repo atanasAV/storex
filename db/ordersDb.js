@@ -10,17 +10,13 @@ exports.init = function() {
 
     const clientsTableSql = `
     create table if not exists clients(
-        id int NOT NULL PRIMARY KEY, 
         client_number varchar(10), 
-        client_names text,
-        order_id int,
-        FOREIGN KEY(order_id) REFERENCES orders(order_id))
+        client_names text)
     `
 
     const ordersTableSql = `
     create table if not exists orders(
-        id int NOT NULL PRIMARY KEY,
-        client_id int
+        client_id int,
         order_paid int,
         FOREIGN KEY(client_id) REFERENCES clients(client_id))
     `

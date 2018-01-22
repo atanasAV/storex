@@ -41,11 +41,12 @@ function getFormInput() {
   order.client.address = $("#clientAddress").val();
 
   order.products = {};
-  for(var i = 1; i <= productsNumber; i++) {
+  for(var i = 0; i < productsNumber; i++) {
     currentProduct = {};
-    currentProduct.productQuantity = $("#productQuantity" + i).val();
-    currentProduct.productDistributor = $("#productDistributor" + i).val();
-    currentProduct.productETA = $("#productETA" + i).val();
+    currentProduct.name = $("#productName" + i).val();
+    currentProduct.quantity = $("#productQuantity" + i).val();
+    currentProduct.distributor = $("#productDistributor" + i).val();
+    currentProduct.ETA = $("#productETA" + i).val();
     order.products[i] = currentProduct;
   }
   order.paid = $("#orderPaid").is(":checked");

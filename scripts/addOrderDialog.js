@@ -1,8 +1,8 @@
 var productsNumber = 1;
-const ipcRenderer = require('electron').ipcRenderer;
 
 $(document).ready(function() {
-    document.getElementById("addProductInputField").addEventListener("click", addProductInput);
+    $("#addProductInputFieldButton").click(addProductInput);
+    $('#ordersForm').submit(addOrder);
 });
 
 function addProductInput() {
@@ -25,14 +25,44 @@ function addProductInput() {
     </div>
     `;
 
-    document.getElementById("productsDiv").innerHTML += productInputField;
+    var row = document.createElement('div');
+    row.innerHTML = productInputField;
+
+    while(row.firstChild) {
+      $("#productsDiv").append(row.firstChild);
+  }
 }
 
-function submitForm(event) {
-  event.preventDefault() // stop the form from submitting
+function getFormInput() {
   var order = {};
-  order.clientNames = document.getElementById("clientNames").value;
-  order.clientNumber = document.getElementById("clientNumber").value;
-  order.clientAddress = document.getElementById("clientAddress").value;
-  ipcRenderer.send('form-submission', order);
+
+  order.clientNames = $("#clientNames").val();
+  order.clientNumber = $("#clientNumber").val();
+  order.clientAddress = $("#clientAddress").val();
+
+  order.products = {};
+  for(var i = 1; i <= productsNumber; i++) {
+    currentProduct = {};
+    currentProduct.productQuantity = $("#productQuantity" + i).val();
+    currentProduct.productDistributor = $("#productDistributor" + i).val();
+    currentProduct.productETA = $("#productETA" + i).val();
+    order.products[i] = currentProduct;
+  }
+  order.paid = $("#orderPaid").is(":checked");
+
+  return order;
+}
+
+function validateOrder(order) {
+  return true;
+}
+
+function addOrder(event) {
+  var order = getFormInput();
+  if(validateOrder(order)) {
+    const ipcRenderer = require('electron').ipcRenderer;
+    ipcRenderer.send('form-submission', order);
+    return true;
+  }
+  return false;
 }

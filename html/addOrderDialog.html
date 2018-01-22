@@ -1,6 +1,5 @@
 <html>
 <head>
-<script src="scripts/addOrderDialog.js"></script>
 <style>
     .non-draggable {
         -webkit-app-region: no-drag;
@@ -14,11 +13,11 @@
     <!-- Modal content-->
     <div class="modal-content non-draggable">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <button id="closeButton" type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Нова Поръчка</h4>
       </div>
       <div class="modal-body">
-        <form onSubmit="JavaScript:submitForm(event)">
+        <form id="ordersForm">
             <!-- Names -->
             <div class="form-group">
               <input type="text" class="form-control" id="clientNames" aria-describedby="emailHelp" placeholder="Имена на клиента">
@@ -50,12 +49,12 @@
               </div>
             </div>
             <div class="form-group">
-              <a class="btn btn-primary" id="addProductInputField">+</a>
+              <a class="btn btn-primary" id="addProductInputFieldButton">+</a>
             </div>
             <!-- Paid -->
             <div class="form-check">
               <label class="form-check-label">
-                <input type="checkbox" class="form-check-input">
+                <input type="checkbox" class="form-check-input" id="orderPaid">
                   Платено
               </label>
             </div>

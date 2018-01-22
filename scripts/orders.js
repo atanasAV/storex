@@ -1,6 +1,7 @@
 $( document ).ready(function() {
 
-    document.getElementById("addOrderButton").addEventListener("click", initAddOrder);
+  console.log("YES !");
+    $("#addOrderButton").click(initAddOrder);
     
     for(i = 1; i <= 4; i++) {
         orderNumber = i;
@@ -29,7 +30,7 @@ $( document ).ready(function() {
 
        const orderList =  order + orderDetails;
 
-       document.getElementById("ordersList").innerHTML += orderList;
+       $("#ordersList").append(orderList);
     }
     $(".list-group-item").addClass('no-hover');
     $(".list-group-item-action").addClass('no-hover');
@@ -38,4 +39,5 @@ $( document ).ready(function() {
 function initAddOrder() {
   $("#addOrderDialog").empty();
   $("#addOrderDialog").load("html/addOrderDialog.html");
+  $.getScript("scripts/addOrderDialog.js");
 }

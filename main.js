@@ -41,5 +41,5 @@ app.on('activate', () => {
 })
 
 ipcMain.on('submitOrderToDb', function (event, order) {
-  db.submitOrder(order);
+  db.submitNewOrder(order);
 });

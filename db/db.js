@@ -1,4 +1,6 @@
 const sqlite3 = require('sqlite3').verbose();
+const ordersDb = require('./orders');
+const clientsDb = require('./clientsDb');
 
 exports.init = function() {
     let db = new sqlite3.Database('db/storex.db', (err) => {
@@ -42,61 +44,12 @@ exports.init = function() {
     return this;
 }
 
-exports.submitOrder = function(order) {
+exports.submitNewOrder = function(order) {
     let db = new sqlite3.Database('db/storex.db');
-    console.log('here')
-    let getClientRowId = 'SELECT rowid AS id FROM clients WHERE phone_number = ?';
-    db.get(getClientRowId, [order.client.phoneNumber], (err, row) => {
-        if(err) throw err;
-        if(row) {
-            console.log("Client found !");
-            addOrderAndProducts(db, order, row.id);
-        } else {
-            addWholeOrder(db, order);
-        }
-    });
+
+    //Get client rowid and add order
+    var callback = ordersDb.addOrder;
+    clientsDb.getClientRowId(db, order.client.phoneNumber, callback);
+
     db.close();
-}
-
-function addWholeOrder(db, order) {
-    var client = order.client;
-    const addClient = `
-    insert into clients(names, phone_number, address) 
-    values(?, ?, ?)
-    `
-    db.run(addClient, client.names, client.phoneNumber, client.address, (err) => {
-        if(err)  throw err;
-        console.log("Client added !");
-        addOrderAndProducts(db, order, this.lastID);
-    });
-}
-
-function addOrderAndProducts(db, order, client_id) {
-    const addOrder = `
-    insert into orders(client_id, paid)
-    values(?, ?)
-    `;
-    db.run(addOrder, client_id, order.paid, (err) => {
-        if(err) throw err;
-        console.log("Order added !")
-        addProducts(db, order.products, this.lastID);
-    });
-}
-
-function addProducts(db, products, order_id) {
-    const addProduct = `
-    insert into products(name, quantity, distributor, eta, order_id)
-    values(?, ?, ?, ?, ?)
-    `;
-    var preparedStatement = db.prepare(addProduct, (err) => {
-        if(err) throw err;
-    })
-    for(var i = 0; i < products.length; i++) {
-        preparedStatement.run(
-            products.name, 
-            products.quantity, 
-            products.distributor, 
-            products.eta, order_id);
-    }
-    preparedStatement.finalize();
 }

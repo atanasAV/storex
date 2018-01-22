@@ -1,7 +1,7 @@
 const {app, BrowserWindow, ipcMain} = require('electron')
 const path = require('path')
 const url = require('url')
-const ordersDb = require("./db/ordersDb").init()
+const db = require("./db/db").init()
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -40,6 +40,6 @@ app.on('activate', () => {
   }
 })
 
-ipcMain.on('form-submission', function (event, order) {
-  ordersDb.submitOrder(order);
+ipcMain.on('submitOrderToDb', function (event, order) {
+  db.submitOrder(order);
 });

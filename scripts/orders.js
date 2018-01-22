@@ -28,7 +28,7 @@ $( document ).ready(function() {
        </div>
        `;
 
-       const orderList =  order + orderDetails;
+       const orderList = order + orderDetails;
 
        $("#ordersList").append(orderList);
     }

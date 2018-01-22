@@ -1,6 +1,7 @@
 var productsNumber = 1;
 
 $(document).ready(function() {
+    console.log("called")
     $("#addProductInputFieldButton").click(addProductInput);
     $('#ordersForm').submit(addOrder);
 });
@@ -59,10 +60,12 @@ function validateOrder(order) {
 }
 
 function addOrder(event) {
+  event.preventDefault();
   var order = getFormInput();
   if(validateOrder(order)) {
     const ipcRenderer = require('electron').ipcRenderer;
-    ipcRenderer.send('form-submission', order);
+    ipcRenderer.send('submitOrderToDb', order);
+    $("#closeButton").click();
     return true;
   }
   return false;

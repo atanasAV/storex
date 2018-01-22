@@ -1,5 +1,5 @@
 const sqlite3 = require('sqlite3').verbose();
-const ordersDb = require('./orders');
+const ordersDb = require('./ordersDb');
 const clientsDb = require('./clientsDb');
 
 exports.init = function() {

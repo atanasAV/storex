@@ -10,6 +10,7 @@ exports.init = function() {
         console.log("Successfully connected to DB.");
     });
 
+    // SCHEMA
     const createClientsTable = `
     create table if not exists clients(
         names text,
@@ -22,6 +23,7 @@ exports.init = function() {
     create table if not exists orders(
         paid int,
         client_id int,
+        date_created timestamp default current_timestamp,
         FOREIGN KEY(client_id) REFERENCES clients(rowid))
     `
 
@@ -35,6 +37,10 @@ exports.init = function() {
         FOREIGN KEY(order_id) REFERENCES orders(rowid))
     `;
 
+    const createProductsIndex = `
+    create index order_id_index
+    on products (order_id)
+    `;
 
     db.run(createClientsTable);
     db.run(createOrdersTable);
@@ -47,10 +53,32 @@ exports.init = function() {
 exports.submitNewOrder = function(order) {
     let db = new sqlite3.Database('db/storex.db');
 
-    //Get client rowid and add order
     var callback = ordersDb.addOrder;
-    var callbackParams = {order: order};
-    clientsDb.getClientRowId(db, order.client.phoneNumber, callback.bind(callbackParams));
+    clientsDb.getClientRowId(db, order, callback);
 
+    console.log("before close")
+    db.close();
+    console.log("after close")
+}
+
+exports.getOrdersList = function(callback) {
+    let db = new sqlite3.Database('db/storex.db');
+    //const sql = `select * from orders`;
+    const sql = `
+    select orders.rowid as rowID, orders.paid, clients.names
+    from orders
+    inner join clients on orders.client_id=clients.rowid
+    order by orders.date_created DESC
+    `;
+
+    db.all(sql, (err, rows) => {
+        if(err) console.log(err);
+
+        if(callback) {
+            console.log(rows);
+            callback(rows);
+        }
+        
+    });
     db.close();
 }

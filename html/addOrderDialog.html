@@ -20,11 +20,13 @@
         <form id="ordersForm">
             <!-- Names -->
             <div class="form-group">
-              <input type="text" class="form-control" id="clientNames" aria-describedby="emailHelp" placeholder="Имена на клиента">
+              <input type="text" class="form-control" id="clientNames" placeholder="Имена на клиента">
+              <span id="clientNamesError" class="help-block hidden">Моля въведете само букви</span>
             </div>
             <!-- GSM -->
             <div class="form-group">
               <input type="tel" class="form-control" id="clientNumber" placeholder="Телефонен номер">
+              <span id="clientNumberError" class="help-block hidden">Моля въведете валиден телефонен номер</span>
             </div>
             <!-- Address -->
             <div class="form-group">
@@ -33,20 +35,27 @@
             <!-- Products -->
             <div id="productsDiv" class="form-group">
               <label for="products">Продукти</label>
+              <div class="container-fluid">
               <div class="row">
-                <div class="col-md-4">
+                <div class="col-sm-4 nopadding">
                   <input type="text" class="form-control" id="productName1" placeholder="Продукт 1">
                 </div>
-                <div class="col-md-2">
+                <div class="col-sm-2 nopadding">
+                  <div class="input-group">
                     <input type="text" class="form-control" id="productQuantity1" placeholder="Кол-во">
                   </div>
-                <div class="col-md-4">
+                </div>
+                <div class="col-xs-1 nopadding">
+                    <input class="nopadding" type="radio" name="quantityType" value="number" checked>m<sup>2</sup></br>
+                    <input class="nopadding" type="radio" name="quantityType" value="sqrMeters">бр
+                </div>
+                <div class="col-sm-3 nopadding">
                   <input type="text" class="form-control" id="productDistributor1" placeholder="Доставчик">
                 </div>
-                <div class="col-md-2">
+                <div class="col-sm-2 nopadding">
                     <input type="text" class="form-control" id="productETA1" placeholder="Дни">
                 </div>
-              </div>
+              </div></div>
             </div>
             <div class="form-group">
               <a class="btn btn-primary" id="addProductInputFieldButton">+</a>

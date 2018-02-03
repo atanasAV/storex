@@ -23,7 +23,8 @@ function addProducts(db, products, order_id) {
             products.name, 
             products.quantity, 
             products.distributor, 
-            products.eta, order_id);
+            products.eta, 
+            order_id);
     }
     preparedStatement.finalize();
 }

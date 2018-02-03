@@ -43,3 +43,9 @@ app.on('activate', () => {
 ipcMain.on('submitOrderToDb', function (event, order) {
   db.submitNewOrder(order);
 });
+
+ipcMain.on('getOrders', function(event, data) {
+  db.getOrdersList((ordersList) => {
+    event.sender.send("getOrdersResult", ordersList);
+  });
+});

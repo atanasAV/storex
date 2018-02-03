@@ -19,3 +19,8 @@
     margin: 0 auto;
     pointer-events: all;
 }
+
+.nopadding {
+    padding: 0 !important;
+    margin: 0 !important;
+ }

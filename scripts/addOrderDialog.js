@@ -1,7 +1,6 @@
 var productsNumber = 1;
 
 $(document).ready(function() {
-    console.log("called")
     $("#addProductInputFieldButton").click(addProductInput);
     $('#ordersForm').submit(addOrder);
 });
@@ -55,7 +54,25 @@ function getFormInput() {
   return order;
 }
 
+function handleError(id) {
+  $(id).parent().addClass("has-error");
+  $(id + "Error").removeClass("hidden");
+}
+
 function validateOrder(order) {
+  var lettersAndSpacesRegEx = /^[a-zA-Z\s]*$/;
+  if(!order.client.names || !order.client.names.match(lettersAndSpacesRegEx)) {
+    handleError("#clientNames");
+    return false;
+  }
+
+  console.log(order.client.phoneNumber.length);
+  if(!order.client.phoneNumber || isNaN(order.client.phoneNumber) || order.client.phoneNumber.length !== 10) {
+    handleError("#clientNumber");
+    return false;
+  }
+
+
   return true;
 }
 

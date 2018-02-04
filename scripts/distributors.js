@@ -1,36 +1,27 @@
 $( document ).ready(() => {
-    $("#distributors").load("html/searchBar.html"); 
+    $("#distributors").load("html/searchBar.html");
 });
 
 function searchDistributors(event) {
     event.preventDefault()
-    $("#searchBar").addClass("hidden");
-
-    const test = `
-    <div id="distributor-items">
-    <ul id="check-list-box" class="list-group checked-list-box">
-    <li class="list-group-item" data-color="success">Dapibus ac facilisis in</li>
-    <li class="list-group-item" data-color="success">Dapibus ac facilisis in</li>
-    <li class="list-group-item" data-color="success">Dapibus ac facilisis in</li>
-    <li class="list-group-item" data-color="success">Dapibus ac facilisis in</li>
-      <li class="list-group-item" data-color="success">Dapibus ac facilisis in</li>
-    </ul>
-    </br>
-    <button class="btn btn-primary col-xs-12" id="get-checked-data">Get Checked Data</button>
-    </div>
-    `;
-
-    $("#distributors").append(test);
-    addAndStyleCheckboxes();
-    $("#get-checked-data").on('click', submitDeliveredItems);
+    $("#distributors").load("html/distributorItems.html", () => {
+        for(var i = 0; i < 10; i++) {
+            console.log("asd")
+            const item = `
+            <li class="list-group-item" data-color="success">Dapibus ac facilisis in</li>
+            `;
+            $("#check-list-box").append(item);
+        }
+        addAndStyleCheckboxes();
+        $("#get-checked-data").on('click', submitDeliveredItems);
+    }); 
 }
 
 function submitDeliveredItems(event) {
     $("#check-list-box li.item-delivered").each(function(idx, li) {
         console.log($(li).text());
     });
-    $("#distributor-items").remove();
-    $("#searchBar").removeClass("hidden");
+    $("#distributors").load("html/searchBar.html");
 }
 
 function addAndStyleCheckboxes() {

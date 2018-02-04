@@ -1,15 +1,13 @@
 $( document ).ready(() => {
-    $("#addOrderButton").click(initAddOrder);
+    $("#orders").load("html/orders.html", () => {
+      $("#addOrderButton").click(initAddOrder);
 
-    const ipcRenderer = require('electron').ipcRenderer;
-    ipcRenderer.send("getOrders");
-
-    ipcRenderer.on("getOrdersResult", renderOrders);
-    $(".list-group-item").addClass('no-hover');
-    $(".list-group-item-action").addClass('no-hover');
-    $('[id^="orderDetails"]').on("hidden.bs.collapse", () => {
-      console.log("asd")
-      $('[id^="orderMeta"]').blur();
+      const ipcRenderer = require('electron').ipcRenderer;
+      ipcRenderer.send("getOrders");
+  
+      ipcRenderer.on("getOrdersResult", renderOrders);
+      $(".list-group-item").addClass('no-hover');
+      $(".list-group-item-action").addClass('no-hover');
     });
 })
 
@@ -21,7 +19,7 @@ function renderOrders(event, args) {
     itemsCount = i+1 + "/" + (i+2);
     
     const orderHtml = `
-    <h4 id="orderMeta${orderNumber}" class="panel-title">
+    <h4 class="panel-title">
       <a class="list-group-item list-group-item-action"
          ${(i%2 == 0) ? 'style="background-color:#f5f5f5"' : ''}
          data-toggle="collapse" 

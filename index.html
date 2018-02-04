@@ -10,7 +10,9 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="scripts/orders.js"></script>
   <script src="scripts/navBar.js"></script>
+  <script src="scripts/clients.js"></script>
   <script src="scripts/distributors.js"></script>
+  <script src="scripts/transport.js"></script>
   <link rel="stylesheet" type="text/css" href="styles/stylesheet.css">
   <style>
     .draggable {
@@ -40,26 +42,17 @@
   <ul class="nav nav-tabs">
       <li class="active"><a href="#orders" data-toggle="tab">Поръчки</a></li>
       <li><a href="#distributors" data-toggle="tab">Доставчици</a></li>
+      <li><a href="#transport" data-toggle="tab">Транспорт</a></li>
       <li><a href="#clients" data-toggle="tab">Клиенти</a></li>
   </ul>
 </div>
 
 <div class="panel-body">
   <div class="tab-content">
-    <!-- Orders -->
-    <div id="orders" class="tab-pane fade in active">
-        <div><button id="addOrderButton" type="button" class="btn btn-success btn-outline btn-block" data-toggle="modal" data-target="#addOrderDialog">Добави</button></div>
-        <br/>
-        <div id="ordersList" class="panel panel-borderless"></div>
-        <div id="addOrderDialog" class="modal fade" role="dialog"></div>
-    </div>
-    <!-- Distributors -->
-    <div id="distributors" class="tab-pane fade">
-    </div>
-    <!-- Clients -->
-    <div id="clients" class="tab-pane fade">
-      <button type="button" class="btn btn-success btn-outline">Добави</button>
-    </div>
+    <div id="orders" class="tab-pane fade in active"></div>
+    <div id="distributors" class="tab-pane fade"></div>
+    <div id="transport" class="tab-pane fade"></div>
+    <div id="clients" class="tab-pane fade"></div>
   </div>
 </div>
 </body>

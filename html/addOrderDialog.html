@@ -33,27 +33,27 @@
                 <input type="tel" class="form-control" id="clientAddress" placeholder="Адрес">
             </div>
             <!-- Products -->
-            <div id="productsDiv" class="form-group">
+            <div class="form-group">
               <label for="products">Продукти</label>
-              <div class="container-fluid">
+              <div id="productsContainer" class="container-fluid">
               <div class="row">
-                <div class="col-sm-4 nopadding">
-                  <input type="text" class="form-control" id="productName1" placeholder="Продукт 1">
+                <div class="col-md-4 nopadding">
+                  <input type="text" class="form-control" id="productName0" placeholder="Продукт 1">
                 </div>
-                <div class="col-sm-2 nopadding">
-                  <div class="input-group">
-                    <input type="text" class="form-control" id="productQuantity1" placeholder="Кол-во">
-                  </div>
+                <div class="col-md-2 nopadding">
+                    <input type="text" class="form-control" id="productQuantity0" placeholder="Кол-во" aria-describedby="quantityTypeAddon">
                 </div>
                 <div class="col-xs-1 nopadding">
-                    <input class="nopadding" type="radio" name="quantityType" value="number" checked>m<sup>2</sup></br>
-                    <input class="nopadding" type="radio" name="quantityType" value="sqrMeters">бр
+                  <select class="form-control nopadding" data-live-search="true">
+                      <option value="number" selected>бр</option>
+                      <option value="sqrMeters">м&sup2;</option>
+                  </select>
                 </div>
-                <div class="col-sm-3 nopadding">
-                  <input type="text" class="form-control" id="productDistributor1" placeholder="Доставчик">
+                <div class="col-md-3 nopadding">
+                  <input type="text" class="form-control" id="productDistributor0" placeholder="Доставчик">
                 </div>
-                <div class="col-sm-2 nopadding">
-                    <input type="text" class="form-control" id="productETA1" placeholder="Дни">
+                <div class="col-md-2 nopadding">
+                    <input type="text" class="form-control" id="productETA0" placeholder="Дни">
                 </div>
               </div></div>
             </div>

@@ -7,6 +7,10 @@ $( document ).ready(() => {
     ipcRenderer.on("getOrdersResult", renderOrders);
     $(".list-group-item").addClass('no-hover');
     $(".list-group-item-action").addClass('no-hover');
+    $('[id^="orderDetails"]').on("hidden.bs.collapse", () => {
+      console.log("asd")
+      $('[id^="orderMeta"]').blur();
+    });
 })
 
 function renderOrders(event, args) {
@@ -17,7 +21,7 @@ function renderOrders(event, args) {
     itemsCount = i+1 + "/" + (i+2);
     
     const orderHtml = `
-    <h4 class="panel-title">
+    <h4 id="orderMeta${orderNumber}" class="panel-title">
       <a class="list-group-item list-group-item-action"
          ${(i%2 == 0) ? 'style="background-color:#f5f5f5"' : ''}
          data-toggle="collapse" 
@@ -31,19 +35,23 @@ function renderOrders(event, args) {
 
    const orderDetailsHtml = `
    <div class="panel-collapse collapse" id="orderDetails${orderNumber}">
-     <div class="panel-footer">
-       Some details here
-     </div>
+    <div class="panel-footer">
+      <div class="row">
+        <div class="col-md-6">Total cost</div>
+        <div class="col-md-6 text-right">$42</div>
+      </div>
+    </div>
    </div>
    `;
 
    const orderList = orderHtml + orderDetailsHtml;
 
    $("#ordersList").append(orderList);
-}
+  }
 }
 
 function initAddOrder() {
+  this.blur();
   $("#addOrderDialog").empty();
   $("#addOrderDialog").load("html/addOrderDialog.html");
   $.getScript("scripts/addOrderDialog.js");

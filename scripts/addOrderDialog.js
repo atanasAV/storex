@@ -1,42 +1,23 @@
 var productsNumber = 1;
 
 $(document).ready(function() {
-    $('#ordersForm').submit(addOrder);
-    $('#addOrderDialog').on('hidden.bs.modal',() => {
-      $("#addOrderButton").blur();
-    });
+  $("#product0").load("html/productInputField.html", addPlaceholder);
+  $('#ordersForm').submit(addOrder);
+  $('#addOrderDialog').on('hidden.bs.modal',() => {
+    $("#addOrderButton").blur();
+  });
 });
 
 function addProductInput() {
     productsNumber++;
 
-    const productInputField = `
-    <div class="row" id="product${productsNumber-1}">
-      <div class="col-md-3 nopadding">
-        <input type="text" class="form-control small-padding" id="productName${productsNumber-1}" placeholder="Продукт ${productsNumber}">
-      </div>
-      <div class="col-md-2 nopadding">
-        <input type="text" class="form-control small-padding" id="productQuantity${productsNumber-1}" placeholder="Кол-во">
-      </div>
-      <div class="col-xs-1 nopadding">
-        <select id="quntityType${productsNumber-1}" class="form-control nopadding" data-live-search="true">
-            <option value="number" selected>бр</option>
-            <option value="sqrMeters">м&sup2;</option>
-        </select>
-      </div>
-      <div  class="col-md-2 nopadding">
-      <input type="text" class="form-control small-padding" id="productPrice${productsNumber-1}" placeholder="Цена">
-      </div>
-      <div class="col-xs-3 nopadding">
-        <input type="text" class="form-control small-padding" id="productDistributor${productsNumber-1}" placeholder="Доставчик">
-      </div>
-      <div class="col-md-1 nopadding">
-        <input type="text" class="form-control small-padding" id="productETA${productsNumber-1}" placeholder="Дни">
-      </div>
-    </div>
-    `;
+    const productInputRow = `<div class="row" id="product${productsNumber-1}"></div>`;
+    $("#productsContainer").append(productInputRow);
+    $("#product" + (productsNumber-1)).load("html/productInputField.html", addPlaceholder);
+}
 
-    $("#productsContainer").append(productInputField);
+function addPlaceholder() {
+  $(this).find(".productName").attr("placeholder", "Продукт " + productsNumber);
 }
 
 function removeProductInput() {
@@ -55,12 +36,16 @@ function getFormInput() {
 
   order.products = {};
   for(var i = 0; i < productsNumber; i++) {
-    currentProduct = {};
-    currentProduct.name = $("#productName" + i).val();
-    currentProduct.quantity = $("#productQuantity" + i).val();
-    currentProduct.distributor = $("#productDistributor" + i).val();
-    currentProduct.ETA = $("#productETA" + i).val();
+    var currentProduct = {};
+    const productId = `#product${i}`;
+    currentProduct.name = $(productId).find(".productName").val();
+    currentProduct.quantity = $(productId).find(".productQuantity").val();
+    currentProduct.quantityType = $(productId).find(".quantityType").val();
+    currentProduct.price = $(productId).find(".productPrice").val();
+    currentProduct.distributor = $(productId).find(".productDistributor").val();
+    currentProduct.ETA = $(productId).find(".productETA").val();
     order.products[i] = currentProduct;
+    console.log(currentProduct);
   }
   order.paid = $("#orderPaid").is(":checked");
 

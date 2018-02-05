@@ -1,6 +1,4 @@
 $( document ).ready(() => {
-    //$("#transport").load("html/transport.html");
-
     for(var i = 0; i < 10; i++) {
         const order = `
         <div class="panel panel-${i%2 ? 'danger' : 'success'}" id="order${i}"></div>

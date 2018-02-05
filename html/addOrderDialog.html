@@ -36,30 +36,9 @@
             <div class="form-group">
               <h4 class="modal-title text-center">Продукти</h4>
             </br>
-              <div id="productsContainer" class="container-fluid">
-              <div class="row">
-                <div class="col-md-3 nopadding">
-                  <input type="text" class="form-control small-padding" id="productName0" placeholder="Продукт 1">
-                </div>
-                <div class="col-md-2 nopadding">
-                    <input type="text" class="form-control small-padding" id="productQuantity0" placeholder="Кол-во">
-                </div>
-                <div class="col-xs-1 nopadding">
-                  <select class="form-control nopadding" data-live-search="true">
-                      <option value="number" selected>бр</option>
-                      <option value="sqrMeters">м&sup2;</option>
-                  </select>
-                </div>
-                <div class="col-md-2 nopadding">
-                    <input type="text" class="form-control small-padding" id="productPrice0" placeholder="Цена">
-                </div>
-                <div class="col-md-3 nopadding">
-                  <input type="text" class="form-control small-padding" id="productDistributor0" placeholder="Доставчик">
-                </div>
-                <div class="col-md-1 nopadding">
-                    <input type="text" class="form-control small-padding" id="productETA0" placeholder="Дни">
-                </div>
-              </div></div>
+            <div id="productsContainer" class="container-fluid">
+              <div class="row" id="product0"></div>
+            </div>
             </div>
             <div class="form-group">
               <a class="btn btn-primary col-xs-4" onclick="addProductInput()">+</a>
